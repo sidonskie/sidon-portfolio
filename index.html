@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidon Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* -- Root Variables -- */
+        :root {
+            --primary-color: #00BFFF; /* Deep Sky Blue */
+            --secondary-color: #9400D3; /* Dark Violet for gradient */
+            --background-color: #101218; 
+            --terminal-bg: #1a1d24; 
+            --font-color: #E0E0E0;
+            --shadow-color: rgba(0, 191, 255, 0.2);
+        }
+
+        /* -- Basic Setup -- */
+        body {
+            background-color: var(--background-color);
+            color: var(--font-color);
+            font-family: 'Fira Code', 'Courier New', Courier, monospace;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow: hidden; 
+        }
+        
+        /* -- Animated Starfield Background -- */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: move-stars 20s linear infinite;
+        }
+
+        .star.s1 { width: 1px; height: 1px; }
+        .star.s2 { width: 2px; height: 2px; }
+        .star.s3 { width: 3px; height: 3px; }
+
+        @keyframes move-stars {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100vh); }
+        }
+
+
+        /* -- Terminal Window Styling -- */
+        .terminal-window {
+            width: 100%;
+            max-width: 1000px;
+            background: var(--terminal-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative; 
+            z-index: 1;
+        }
+        
+        /* -- Animated Glowing Border -- */
+        .terminal-window::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px;
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            background: conic-gradient(
+                from 0deg, 
+                var(--primary-color), 
+                var(--secondary-color), 
+                var(--primary-color)
+            );
+            z-index: -1;
+            border-radius: 10px;
+            animation: rotate-border 4s linear infinite;
+        }
+        
+        @keyframes rotate-border {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* This is the inner container to hide the border overflow */
+        .terminal-content {
+            background: var(--terminal-bg);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+
+        .terminal-header {
+            background: #FFFFFF;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .header-buttons { display: flex; }
+        .button {
+            height: 12px;
+            width: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .close { background-color: #ff5f56; }
+        .minimize { background-color: #ffbd2e; }
+        .maximize { background-color: #27c93f; }
+        
+        .header-title { 
+            color: #333;
+            text-align: center; 
+            flex-grow: 1; 
+        }
+
+        .terminal-body {
+            padding: 25px;
+            height: 70vh;
+            overflow-y: auto;
+            /* Hide scrollbar */
+            scrollbar-width: none; /* For Firefox */
+            -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+        }
+        
+        /* Hide scrollbar for Webkit browsers */
+        .terminal-body::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* -- Typing Effect & Hero Section -- */
+        #hero h1 {
+            font-size: 2rem;
+            color: var(--font-color);
+            margin: 0;
+        }
+        .cursor {
+            color: var(--primary-color);
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink { from, to { opacity: 1; } 50% { opacity: 0; } }
+        .sub-text { color: #aaa; margin-top: 10px; }
+
+
+        /* -- Clean & Professional Section Headers -- */
+        h2 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+
+        /* -- Profile Section -- */
+        .about-container {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-color);
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        
+        /* -- Content Styling -- */
+        section { padding-bottom: 30px; }
+        p { margin: 0; line-height: 1.8; }
+        
+        /* -- Skills Grid -- */
+        .skills-grid {
+            display: grid;
+            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        }
+
+        .skill {
+            background: #333745;
+            border: 1px solid #444;
+            padding: 15px;
+            text-align: center;
+            border-radius: 5px;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .skill:hover {
+            background: var(--primary-color);
+            color: #1a1d24;
+            transform: translateY(-5px);
+        }
+
+        /* -- Projects Section -- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .project-card {
+            background: #101218;
+            border: 1px solid #333;
+            border-radius: 5px;
+            overflow: hidden;
+            text-align: center;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+             box-shadow: 0 0 15px var(--shadow-color);
+        }
+        
+        .project-card h3 {
+             color: var(--font-color);
+             padding: 15px;
+        }
+
+        .project-image-container {
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .project-image-container img {
+            width: 100%;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .project-image-container:hover img {
+            transform: scale(1.1);
+        }
+
+        /* -- Modal Styling -- */
+        .image-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .image-modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .modal-content {
+            max-width: 80%;
+            max-height: 80%;
+            border-radius: 5px;
+            transform: scale(0.5);
+            transition: transform 0.5s ease;
+        }
+
+        .image-modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: var(--primary-color);
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            transform: scale(1.2);
+        }
+
+        /* Spinning animation for the modal close button */
+        .modal-close.is-closing {
+            animation: spin-out 0.5s forwards;
+        }
+
+        @keyframes spin-out {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* -- Contact Button -- */
+        .cta-button {
+            background: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            color: #1a1d24;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 20px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .cta-button:hover {
+            background: transparent;
+            color: var(--primary-color);
+        }
+
+        /* -- Responsive Design -- */
+        @media (max-width: 768px) {
+            .about-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .terminal-body {
+                padding: 15px;
+            }
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="stars"></div>
+
+    <div class="terminal-window">
+      <div class="terminal-content">
+        <header class="terminal-header">
+            <div class="header-buttons">
+                <span class="button close"></span>
+                <span class="button minimize"></span>
+                <span class="button maximize"></span>
+            </div>
+            <div class="header-title">Christian ray G. Sidon Portfolio</div>
+        </header>
+
+        <main class="terminal-body">
+            <section id="hero">
+                <h1><span id="typing-effect"></span><span class="cursor">_</span></h1>
+                <p class="sub-text">Bachelor in Industrial Technology - Major in CompTech.</p>
+            </section>
+
+            <section id="about">
+                <h2>Sidon Profile</h2>
+                <div class="about-container">
+                    <img src="https://picsum.photos/200" alt="Your Name - Profile Picture" class="profile-picture">
+                    <div class="about-text">
+                        <p>
+                            &gt; Hello! I'm Christian ray, a tech enthusiast with a passion for solving problems, whether they're in the physical or digital world. With a unique background that spans from intricate computer and appliance repair to custom software development, I bring a holistic understanding of technology to every project I undertake.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="skills">
+                <h2>My Skills</h2>
+                <div class="skills-grid">
+                    <div class="skill">Computer Technician</div>
+                    <div class="skill">JavaScript</div>
+                    <div class="skill">Programmer</div>
+                    <div class="skill">CSS</div>
+                    <div class="skill">Wordpress</div>
+                    <div class="skill">Microsoft Office</div>
+                    <div class="skill">SQL Databases</div>
+                    <div class="skill">Network Technician</div>
+                  <div class="skill">Network Analyst</div>
+                  <div class="skill">CCTV System</div>
+                </div>
+            </section>
+
+            <section id="projects">
+                <h2>Featured Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                         <h3>Real-Time Data Processor</h3>
+                         <div class="project-image-container">
+                            <img src="https://picsum.photos/400/300?random=1" alt="Sidon Project">
+                         </div>
+                    </div>
+                    <div class="project-card">
+                         <h3>ML Deployment Pipeline</h3>
+                         <div class="project-image-container">
+                            <img src="https://picsum.photos/400/300?random=2" alt="Sidon Project">
+                         </div>
+                    </div>
+                    <div class="project-card">
+                        <h3>High-Performance API</h3>
+                        <div class="project-image-container">
+                           <img src="https://picsum.photos/400/300?random=3" alt="Sidon Project">
+                        </div>
+                   </div>
+                </div>
+            </section>
+
+            <section id="contact">
+                <h2>Contact Information</h2>
+                <p>&gt; I am currently available for new career opportunities. Please feel free to contact me to discuss potential collaborations.</p>
+                <a href="mailto:christian.ray.g.sidon@gmail.com" class="cta-button">Contact Me</a>
+            </section>
+        </main>
+      </div>
+    </div>
+    
+    <div id="imageModal" class="image-modal">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Typing effect script
+            const typingElement = document.getElementById('typing-effect');
+            const textToType = "Welcome to Sidon Portfolio...";
+            let index = 0;
+
+            function type() {
+                if (index < textToType.length) {
+                    typingElement.textContent += textToType.charAt(index);
+                    index++;
+                    setTimeout(type, 80); // Adjust typing speed here (in milliseconds)
+                }
+            }
+            type();
+
+            // Modal script
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const projectImages = document.querySelectorAll('.project-image-container');
+            const closeModal = document.querySelector('.modal-close');
+
+            projectImages.forEach(container => {
+                container.addEventListener('click', () => {
+                    modal.classList.add('active');
+                    const img = container.querySelector('img');
+                    modalImg.src = img.src;
+                });
+            });
+
+            const closeTheModal = () => {
+                // Add the closing animation class to the button
+                closeModal.classList.add('is-closing');
+                
+                // Wait for the animation to finish before hiding the modal
+                setTimeout(() => {
+                    modal.classList.remove('active');
+                    // IMPORTANT: Remove the animation class so it can be re-added next time
+                    closeModal.classList.remove('is-closing');
+                }, 500); // This duration should match the animation duration in CSS
+            }
+
+            closeModal.addEventListener('click', closeTheModal);
+            
+            modal.addEventListener('click', (e) => {
+                // Also close the modal if the background is clicked
+                if(e.target === modal){
+                    closeTheModal();
+                }
+            });
+
+            // Animated stars background script
+            const starsContainer = document.querySelector('.stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                const size = Math.ceil(Math.random() * 3);
+                star.classList.add('star', `s${size}`);
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 20}s`;
+                star.style.animationDuration = `${10 + Math.random() * 10}s`;
+                starsContainer.appendChild(star);
+            }
+        });
+    </script>
+</body>
+</html>
