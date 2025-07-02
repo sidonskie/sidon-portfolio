@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sidon Portfolio</title>
+    <title>Your Name // Professional Developer Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
@@ -218,6 +218,8 @@
             overflow: hidden;
             text-align: center;
             transition: box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
         }
 
         .project-card:hover {
@@ -233,10 +235,27 @@
             cursor: pointer;
             overflow: hidden;
             position: relative;
+            height: 200px;
+        }
+        
+        .project-doc-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3; /* Auto-fit aspect ratio */
+            background-color: #000;
+            overflow: hidden;
+        }
+        
+        .project-doc-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
         
         .project-image-container img {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
             display: block;
             transition: transform 0.4s ease;
         }
@@ -244,9 +263,36 @@
         .project-image-container:hover img {
             transform: scale(1.1);
         }
+        
+        .fullscreen-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            background-color: rgba(0,0,0,0.5);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .fullscreen-btn:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+        
+        .fullscreen-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
 
-        /* -- Modal Styling -- */
-        .image-modal {
+        /* -- Modal Styling (for both images and docs) -- */
+        .modal {
             position: fixed;
             top: 0;
             left: 0;
@@ -262,20 +308,36 @@
             transition: opacity 0.5s ease;
         }
 
-        .image-modal.active {
+        .modal.active {
             opacity: 1;
             pointer-events: all;
         }
         
-        .modal-content {
+        .modal-content-img {
             max-width: 80%;
             max-height: 80%;
             border-radius: 5px;
             transform: scale(0.5);
             transition: transform 0.5s ease;
         }
+        
+        .modal-content-doc {
+            width: 90%;
+            height: 90%;
+            background: #fff;
+            border-radius: 5px;
+            transform: scale(0.5);
+            transition: transform 0.5s ease;
+        }
+        
+        .modal-content-doc iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
 
-        .image-modal.active .modal-content {
+        .modal.active .modal-content-img,
+        .modal.active .modal-content-doc {
             transform: scale(1);
         }
 
@@ -288,25 +350,11 @@
             font-weight: bold;
             cursor: pointer;
             transition: transform 0.3s ease;
+            z-index: 1001;
         }
         
         .modal-close:hover {
             transform: scale(1.2);
-        }
-
-        /* Spinning animation for the modal close button */
-        .modal-close.is-closing {
-            animation: spin-out 0.5s forwards;
-        }
-
-        @keyframes spin-out {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-                opacity: 0;
-            }
         }
 
         /* -- Contact Button -- */
@@ -363,9 +411,9 @@
             </section>
 
             <section id="about">
-                <h2>Sidon Profile</h2>
+                <h2>My Profile</h2>
                 <div class="about-container">
-                    <img src="https://picsum.photos/200" alt="Your Name - Profile Picture" class="profile-picture">
+                    <img src="https://raw.githubusercontent.com/sidonskie/sidon-portfolio/refs/heads/main/photos/SKY_7881%20-%20Copyjj%20backup.png" alt="SIDON" class="profile-picture">
                     <div class="about-text">
                         <p>
                             &gt; Hello! I'm Christian ray, a tech enthusiast with a passion for solving problems, whether they're in the physical or digital world. With a unique background that spans from intricate computer and appliance repair to custom software development, I bring a holistic understanding of technology to every project I undertake.
@@ -385,8 +433,8 @@
                     <div class="skill">Microsoft Office</div>
                     <div class="skill">SQL Databases</div>
                     <div class="skill">Network Technician</div>
-                  <div class="skill">Network Analyst</div>
-                  <div class="skill">CCTV System</div>
+                    <div class="skill">Network Analyst</div>
+                    <div class="skill">CCTV System</div>
                 </div>
             </section>
 
@@ -394,23 +442,54 @@
                 <h2>Featured Projects</h2>
                 <div class="projects-grid">
                     <div class="project-card">
-                         <h3>Real-Time Data Processor</h3>
-                         <div class="project-image-container">
-                            <img src="https://picsum.photos/400/300?random=1" alt="Sidon Project">
-                         </div>
+                          <h3>My Project Schematics</h3>
+                          <div class="project-doc-container" id="doc-preview-container">
+                              <button class="fullscreen-btn" id="fullscreen-btn" title="View Fullscreen">
+                                  <svg viewBox="0 0 24 24">
+                                      <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                                  </svg>
+                              </button>
+                              <iframe src="https://docs.google.com/document/d/1sXvAeSMn8MGfXIyuCGG_xPC67LA06_ivbaA9v6b_IyI/preview" scrolling="no"></iframe>
+                          </div>
                     </div>
                     <div class="project-card">
-                         <h3>ML Deployment Pipeline</h3>
-                         <div class="project-image-container">
-                            <img src="https://picsum.photos/400/300?random=2" alt="Sidon Project">
-                         </div>
+                          <h3>Smoke &amp; Gas Sensor</h3>
+                          <div class="project-image-container">
+                              <img src="https://raw.githubusercontent.com/sidonskie/sidon-portfolio/refs/heads/main/photos/257546578_1252735825227076_4322643125794903310_n.jpg" alt="ML Deployment Pipeline Project">
+                          </div>
                     </div>
                     <div class="project-card">
-                        <h3>High-Performance API</h3>
+                        <h3>Automatic Hand Sanitizer</h3>
                         <div class="project-image-container">
-                           <img src="https://picsum.photos/400/300?random=3" alt="Sidon Project">
+                           <img src="https://raw.githubusercontent.com/sidonskie/sidon-portfolio/refs/heads/main/photos/257239838_1252736188560373_8179475513657535227_n.jpg" alt="High-Performance API Project">
                         </div>
                    </div>
+                </div>
+            </section>
+            
+            <section id="additional-projects">
+                <h2>Additional Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                          <h3>Photoshop Projects</h3>
+                        <div class="project-doc-container" id="doc-preview-container-photoshop">
+                            <button class="fullscreen-btn" id="fullscreen-btn-photoshop" title="View Fullscreen">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                                </svg>
+                            </button>
+                            <iframe src="https://docs.google.com/document/d/1IQkX2hcrx9fcJLWG6SuofUGtPi43-fLU/preview" scrolling="no"></iframe>
+                        </div>
+                          <p>These are my Photoshop projects from my On-the-Job Training (OJT).</p>
+                    </div>
+                  
+                    <div class="project-card">
+                          <h3>Repair Archive</h3>
+                          <div class="project-image-container">
+                              <img src="https://raw.githubusercontent.com/sidonskie/sidon-portfolio/refs/heads/main/photos/1751355924697.jpg" alt="E-Commerce Platform">
+                          </div>
+                          <p>The first laptop I ever fixed was back in 2018. It kept overheating, but luckily, I managed to repair it without a problem.</p>
+                    </div>
                 </div>
             </section>
 
@@ -423,9 +502,16 @@
       </div>
     </div>
     
-    <div id="imageModal" class="image-modal">
-        <span class="modal-close">&times;</span>
-        <img class="modal-content" id="modalImage">
+    <div id="imageModal" class="modal">
+        <span class="modal-close" id="closeImageModal">&times;</span>
+        <img class="modal-content-img" id="modalImage">
+    </div>
+
+    <div id="docModal" class="modal">
+        <span class="modal-close" id="closeDocModal">&times;</span>
+        <div class="modal-content-doc">
+            <iframe id="modalDoc" src="" frameborder="0"></iframe>
+        </div>
     </div>
 
 
@@ -440,45 +526,92 @@
                 if (index < textToType.length) {
                     typingElement.textContent += textToType.charAt(index);
                     index++;
-                    setTimeout(type, 80); // Adjust typing speed here (in milliseconds)
+                    setTimeout(type, 80);
                 }
             }
             type();
 
-            // Modal script
-            const modal = document.getElementById('imageModal');
+            // --- Image Modal Script ---
+            const imageModal = document.getElementById('imageModal');
             const modalImg = document.getElementById('modalImage');
             const projectImages = document.querySelectorAll('.project-image-container');
-            const closeModal = document.querySelector('.modal-close');
+            const closeImageModalBtn = document.getElementById('closeImageModal');
 
             projectImages.forEach(container => {
                 container.addEventListener('click', () => {
-                    modal.classList.add('active');
-                    const img = container.querySelector('img');
-                    modalImg.src = img.src;
+                    imageModal.classList.add('active');
+                    modalImg.src = container.querySelector('img').src;
                 });
             });
 
-            const closeTheModal = () => {
-                // Add the closing animation class to the button
-                closeModal.classList.add('is-closing');
-                
-                // Wait for the animation to finish before hiding the modal
-                setTimeout(() => {
-                    modal.classList.remove('active');
-                    // IMPORTANT: Remove the animation class so it can be re-added next time
-                    closeModal.classList.remove('is-closing');
-                }, 500); // This duration should match the animation duration in CSS
+            function closeImageModal() {
+                imageModal.classList.remove('active');
             }
 
-            closeModal.addEventListener('click', closeTheModal);
-            
-            modal.addEventListener('click', (e) => {
-                // Also close the modal if the background is clicked
-                if(e.target === modal){
-                    closeTheModal();
-                }
+            closeImageModalBtn.addEventListener('click', closeImageModal);
+            imageModal.addEventListener('click', (e) => {
+                if(e.target === imageModal) closeImageModal();
             });
+
+            // --- Document Preview and Modal Script ---
+            const docModal = document.getElementById('docModal');
+            const modalDoc = document.getElementById('modalDoc');
+            const closeDocModalBtn = document.getElementById('closeDocModal');
+
+            function setupDocViewer(containerId, buttonId, docUrl) {
+                const docPreviewContainer = document.getElementById(containerId);
+                const fullscreenBtn = document.getElementById(buttonId);
+
+                if (docPreviewContainer && fullscreenBtn) {
+                    // Open modal when clicking the container (but not the button)
+                    docPreviewContainer.addEventListener('click', (e) => {
+                        if (e.target !== fullscreenBtn && !fullscreenBtn.contains(e.target)) {
+                            docModal.classList.add('active');
+                            // Use a URL better suited for embedding in a modal
+                            modalDoc.src = docUrl.replace('/preview', '/edit?usp=sharing');
+                        }
+                    });
+
+                    // Fullscreen button functionality
+                    fullscreenBtn.addEventListener('click', (e) => {
+                        e.stopPropagation(); // Prevents the modal from opening
+                        if (!document.fullscreenElement) {
+                            docPreviewContainer.requestFullscreen().catch(err => {
+                                alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                            });
+                        } else {
+                            if (document.exitFullscreen) {
+                                document.exitFullscreen();
+                            }
+                        }
+                    });
+                }
+            }
+
+            // Setup for the first document viewer
+            setupDocViewer(
+                'doc-preview-container',
+                'fullscreen-btn',
+                'https://docs.google.com/document/d/1sXvAeSMn8MGfXIyuCGG_xPC67LA06_ivbaA9v6b_IyI/preview'
+            );
+
+            // Setup for the Photoshop projects document viewer
+            setupDocViewer(
+                'doc-preview-container-photoshop',
+                'fullscreen-btn-photoshop',
+                'https://docs.google.com/document/d/1IQkX2hcrx9fcJLWG6SuofUGtPi43-fLU/preview'
+            );
+
+            function closeDocModal() {
+                docModal.classList.remove('active');
+                modalDoc.src = ""; // Stop iframe from loading in background
+            }
+
+            closeDocModalBtn.addEventListener('click', closeDocModal);
+            docModal.addEventListener('click', (e) => {
+                if (e.target === docModal) closeDocModal();
+            });
+
 
             // Animated stars background script
             const starsContainer = document.querySelector('.stars');
