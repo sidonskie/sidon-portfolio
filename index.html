@@ -216,7 +216,6 @@
             border: 1px solid #333;
             border-radius: 5px;
             overflow: hidden;
-            text-align: center;
             transition: box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
@@ -226,24 +225,38 @@
              box-shadow: 0 0 15px var(--shadow-color);
         }
         
-        .project-card h3 {
+        /* NEW: Wrapper for text content in cards */
+        .project-card-body {
+            padding: 15px;
+            text-align: center;
+            flex-grow: 1; /* Helps align cards with different text lengths */
+        }
+        
+        .project-card-body h3 {
              color: var(--font-color);
-             padding: 15px;
+             margin: 0 0 10px 0;
+        }
+
+        .project-card-body p {
+            font-size: 0.9em;
+            color: #aaa;
+            line-height: 1.5;
         }
 
         .project-image-container {
             cursor: pointer;
             overflow: hidden;
             position: relative;
-            height: 200px;
+            height: 230px; /* Matched height with doc container */
         }
         
+        /* UPDATED: Fixed height for predictability */
         .project-doc-container {
             position: relative;
             width: 100%;
-            aspect-ratio: 4 / 3; /* Auto-fit aspect ratio */
+            height: 230px; /* Fixed height for consistent layout */
             background-color: #000;
-            overflow: hidden;
+            overflow: auto; /* Allow scrolling as a fallback */
         }
         
         .project-doc-container iframe {
@@ -442,26 +455,35 @@
                 <h2>Featured Projects</h2>
                 <div class="projects-grid">
                     <div class="project-card">
-                          <h3>My Project Schematics</h3>
-                          <div class="project-doc-container" id="doc-preview-container">
-                              <button class="fullscreen-btn" id="fullscreen-btn" title="View Fullscreen">
-                                  <svg viewBox="0 0 24 24">
-                                      <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
-                                  </svg>
-                              </button>
-                              <iframe src="https://docs.google.com/document/d/1sXvAeSMn8MGfXIyuCGG_xPC67LA06_ivbaA9v6b_IyI/preview" scrolling="no"></iframe>
-                          </div>
+                        <div class="project-doc-container" id="doc-preview-container">
+                            <button class="fullscreen-btn" id="fullscreen-btn" title="View Fullscreen">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                                </svg>
+                            </button>
+                            <iframe src="https://docs.google.com/document/d/1sXvAeSMn8MGfXIyuCGG_xPC67LA06_ivbaA9v6b_IyI/preview"></iframe>
+                        </div>
+                        <div class="project-card-body">
+                            <h3>My Project Schematics</h3>
+                            <p>A collection of hardware and electronics project schematics.</p>
+                        </div>
                     </div>
                     <div class="project-card">
-                          <h3>Smoke &amp; Gas Sensor</h3>
-                          <div class="project-image-container">
-                              <img src="https://raw.githubusercontent.com/sidonskie/sidon-portfolio/refs/heads/main/photos/257546578_1252735825227076_4322643125794903310_n.jpg" alt="ML Deployment Pipeline Project">
-                          </div>
-                    </div>
-                    <div class="project-card">
-                        <h3>Automatic Hand Sanitizer</h3>
                         <div class="project-image-container">
-                           <img src="https://raw.githubusercontent.com/sidonskie/sidon-portfolio/refs/heads/main/photos/257239838_1252736188560373_8179475513657535227_n.jpg" alt="High-Performance API Project">
+                            <img src="https://raw.githubusercontent.com/sidonskie/sidon-portfolio/refs/heads/main/photos/257546578_1252735825227076_4322643125794903310_n.jpg" alt="Smoke & Gas Sensor Project">
+                        </div>
+                        <div class="project-card-body">
+                            <h3>Smoke &amp; Gas Sensor</h3>
+                            <p>An IoT device for detecting smoke and harmful gases in real-time.</p>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-image-container">
+                           <img src="https://raw.githubusercontent.com/sidonskie/sidon-portfolio/refs/heads/main/photos/257239838_1252736188560373_8179475513657535227_n.jpg" alt="Automatic Hand Sanitizer Project">
+                        </div>
+                        <div class="project-card-body">
+                             <h3>Automatic Hand Sanitizer</h3>
+                             <p>A touchless hand sanitizer dispenser built with an Arduino.</p>
                         </div>
                    </div>
                 </div>
@@ -471,24 +493,28 @@
                 <h2>Additional Projects</h2>
                 <div class="projects-grid">
                     <div class="project-card">
-                          <h3>Photoshop Projects</h3>
                         <div class="project-doc-container" id="doc-preview-container-photoshop">
                             <button class="fullscreen-btn" id="fullscreen-btn-photoshop" title="View Fullscreen">
                                 <svg viewBox="0 0 24 24">
                                     <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
                                 </svg>
                             </button>
-                            <iframe src="https://docs.google.com/document/d/1IQkX2hcrx9fcJLWG6SuofUGtPi43-fLU/preview" scrolling="no"></iframe>
+                            <iframe src="https://docs.google.com/document/d/1IQkX2hcrx9fcJLWG6SuofUGtPi43-fLU/preview"></iframe>
                         </div>
-                          <p>These are my Photoshop projects from my On-the-Job Training (OJT).</p>
+                        <div class="project-card-body">
+                             <h3>Photoshop Projects</h3>
+                             <p>A collection of my Photoshop projects from On-the-Job Training (OJT).</p>
+                        </div>
                     </div>
                   
                     <div class="project-card">
-                          <h3>Repair Archive</h3>
                           <div class="project-image-container">
                               <img src="https://raw.githubusercontent.com/sidonskie/sidon-portfolio/refs/heads/main/photos/1751355924697.jpg" alt="E-Commerce Platform">
                           </div>
-                          <p>The first laptop I ever fixed was back in 2018. It kept overheating, but luckily, I managed to repair it without a problem.</p>
+                          <div class="project-card-body">
+                              <h3>Repair Archive</h3>
+                              <p>The first laptop I fixed in 2018. I resolved an overheating issue, and it's still running today.</p>
+                          </div>
                     </div>
                 </div>
             </section>
